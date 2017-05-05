@@ -1,9 +1,7 @@
 from django import forms
 
 from .models import Ticket
-
 from .models import Comment
-
 from .models import Project
 
 
