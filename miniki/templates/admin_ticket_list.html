@@ -109,67 +109,13 @@
 </div>
 
 
-<!--<button type=button onclick="myFunction()">X1</button>-->
-<!--<p id="demo"></p>
-
- <button type=button onclick="myFunction2()">X2</button>-->
-
-<!--<script>
-function myFunction() {
-    document.getElementById("demo").innerHTML = "Hello World";
-}
-</script>-->
-
-<!--</script>
- <button type=button onclick="check()">check ?</button>
-
-<script>
-function check() {
-    if (document.getElementById("myCheck").checked )
-        alert('checked!')
-}
-</script>-->
 
 
 
 
-<script>
-    function filter_tickets() {
-        var filter_selected = document.getElementById("filter_select").value;
-        // { % verbatim %
-        // }
-        // set_filter_value()
-        alert("pas mal pas mal")
-        return filter_selected;
-    }
-</script>
-
-<!--<script>
-    function filter_tickets() {
-        var filter_selected = document.getElementById("filter_select").value
-        $.ajax({
-            //    url: "close_ticket/",
-            url: "{{ctx}}",
-            type: "GET",
-            data: {
-                'filter': JSON.stringify(filter_selected),
-                'csrfmiddlewaretoken': '{{ csrf_token }}',
-            },
-
-            success: function() {
-                alert('DONE!');
-                // window.location.reload(false);
-            },
-            error: function() {
-                alert('ERROR!');
-            },
-
-        });
-    }
-</script>-->
 
 
-
+<!--this needs to be moved in app.js...-->
 <script>
     function myFunction2() {
         var pk_list = getCheckedCheckboxesFor('name_box')
@@ -187,15 +133,14 @@ function check() {
                 'csrfmiddlewaretoken': '{{ csrf_token }}',
 
             },
-            //    success: function(response){
-            //    $('#blurg').html(response).fadeIn(1500);
+
             success: function() {
                 alert('DONE!');
             },
             error: function() {
                 alert('ERROR!');
             },
-            //    }
+
         });
     }
 </script>
