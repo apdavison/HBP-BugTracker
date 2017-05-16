@@ -78,8 +78,7 @@
                     </td>
                     <td width=50>
                         <form action="" class="ticket-form" ng-controller="TicketForm" onsubmit="return false">
-                            {% if object.1.is_author %}
-                            <button type="active" class="glyphicon glyphicon-pencil" align=right ng-click="editTicket()"></button> {% endif %}
+                            <button type="active" class="glyphicon glyphicon-pencil" align=right ng-click="editTicket()"></button>
                         </form>
                     </td>
                 </tr>
@@ -102,39 +101,57 @@
 </main>
 
 <!--comment part-->
-<main class="comment">
+<main class="comment" ng-controller="CommentForm" onsubmit="return false">
 
     <div class="panel-heading">
         <h3 class="panel-title" id="title-commment"> Comments </h3>
     </div>
 
-    {% for comment in object.0.all %}
-    <table class="table table-striped table-condensed">
-        <div class="comment">
-            <tbody>
-                <tr id="table-ticket-detail-comment">
-                    <td width=200>
-                        by {{ comment.author }}
-                    </td>
-                    <td width=2000>
-                    </td>
-                    <td width=400>
-                        {{ comment.creation_date}}
-                    </td>
-                </tr>
+    {% for comment in object.0 %}
+    <div id='CommentToShow-{{comment.pk}}'>
 
-                <tr id="table-ticket-detail-comment-content">
-                    <td width=200>
-                    </td>
-                    <td width=2000>
-                        <br/> {{ comment.text|markdown }}
-                    </td>
-                    <td width=400>
-                    </td>
-            </tbody>
+        <table class="table table-striped table-condensed">
+            <div class="comment">
+                <tbody>
+                    <tr id="table-ticket-detail-comment">
+                        <td width=200>
+                            <span class="glyphicon glyphicon-user"></span> {{ comment.author }}
+                        </td>
+                        <td width=1000>
+                        </td>
+                        <td width=300>
+                            {{ comment.creation_date}}
+                        </td>
+                        <td width=50>
+
+                            <form action="" class="Commentform" ng-controller="CommentForm" onsubmit="return false">
+                                <button type=button class="glyphicon glyphicon-pencil" ng-click="editComment({{comment.pk}})"> </button>
+                            </form>
+
+                        </td>
+                    </tr>
+
+                    <tr id="table-ticket-detail-comment-content">
+                        <td width=200>
+                        </td>
+                        <td width=1000 id='editable-text-{{comment.pk}}' contenteditable="false">
+                            <br/> {{ comment.text|markdown }}
+                        </td>
+                        <td width=300>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </div>
+        </table>
+
+        <div id='panelForButtonSave-{{comment.pk}}'>
         </div>
-    </table>
-    {% endfor%}
+    </div>
+
+    {% endfor %}
+
 </main>
 
 <main action="" class="commentForm" method="POST" ng-controller="CommentForm">

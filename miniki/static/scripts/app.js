@@ -3,33 +3,16 @@
     // Define the miniki application, currently doing nothing.
     var app = angular.module('miniki', ['hbpCommon']);
 
-
+    //controller for ticket panel in detailed view
     app.controller('TicketForm', function($scope) {
-        // The form controller that manage the displays of preview
         $("#TicketToEdit").hide();
-        // $scope.t=false
         $scope.editTicket = function(ticket) {
             $("#TicketToEdit").show();
             $("#TicketToShow").hide();
         };
     });
 
-
-    // app.controller('TicketListForm', function($scope) {
-    //     $scope.init = function() {
-
-    //     };
-
-    //     $scope.editTicket = function(pk) {
-    //         alert(pk)
-    //         var title = $("#ticket-title" + pk.toString()).text();
-    //         alert(title)
-    //         $("#ticket-title" + pk.toString()).replaceWith('<td id="ticket-title' + pk.toString() + '" class=title width=850 contenteditable="true">' + title + '</td>');
-
-    //     };
-
-    // });
-
+    //controller for ticket edition panel in detail view
     app.controller('TicketEditSave', function($scope) {
 
         $scope.saveEditedTicket = function(pk) {
@@ -43,26 +26,28 @@
                 data: { 'pk': JSON.stringify(pk), 'title': title, 'text': text, 'action': "edit_ticket", 'csrfmiddlewaretoken': csrftoken },
 
                 success: function(json) {
-                    alert('Your ticket havForme been edited!');
+                    alert('Your ticket have been edited!');
+                    window.location.reload(true)
                 },
                 error: function(xhr, errmsg, err) {
                     console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
                 },
             });
-            $("#ticket-title").replaceWith('<td id="ticket-title" class=title width=850>' + title + '</td>');
-            $("#ticket-text").replaceWith('<td id="ticket-text" class=text width=850>' + text + '</td>');
-            $("#TicketToEdit").hide();
-            $("#TicketToShow").show();
+            // $("#ticket-title").replaceWith('<td id="ticket-title" class=title width=850>' + title + '</td>');
+            // $("#ticket-text").replaceWith('<td id="ticket-text" class=text width=850>' + text + '</td>');
+            // $("#TicketToEdit").hide();
+            // $("#TicketToShow").show();
         };
     });
 
 
-
+    //controller for comment edition in detail view
     app.controller('CommentForm', function($scope) {
 
         $scope.editComment = function(pk) {
             var comtext = $("#editable-text-" + pk).text()
-            angular.element(document.querySelector("#editable-text-" + pk)).attr('contenteditable', "true")
+            angular.element(document.querySelector("#editable-text-" + pk)).attr('contenteditable', "true");
+            angular.element(document.querySelector("#editable-text-" + pk)).attr('bgcolor', 'ghostwhite');
             _createButton("Save", saveEditedComment);
 
             function _createButton(name, func) {
@@ -94,24 +79,11 @@
                 //  change view
                 $("#btnSave").remove();
                 angular.element(document.querySelector("#editable-text-" + pk)).attr('contenteditable', "false")
+                angular.element(document.querySelector("#editable-text-" + pk)).attr('bgcolor', '');
             }
         };
 
     });
-
-
-    // Bootstrap function
-    angular.bootstrap().invoke(function($http, $log) {
-        $http.get('/config.json').then(function(res) {
-            window.bbpConfig = res.data;
-            angular.element(document).ready(function() {
-                angular.bootstrap(document, ['miniki']);
-            });
-        }, function() {
-            $log.error('Cannot boot miniki application');
-        });
-    });
-
 
 
 
@@ -140,12 +112,9 @@
 
         $scope.set_filter_value = function(filter_value) {
             $scope.filter_value = filter_value;
-
         };
 
         $scope.match_filter = function(ticket_status) {
-            // alert(ticket_status)
-
             if ($scope.filter_value == 'both') {
                 return true
             } else if ($scope.filter_value == ticket_status) {
@@ -168,6 +137,60 @@
             }, 'https://collab.humanbrainproject.eu/');
         };
         sendState();
+
+
+        $scope.myFunction2 = function(ctx) {
+
+            var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+            var pk_list = getCheckedCheckboxesFor('name_box')
+            var action_selected = document.getElementById("action_select").value
+
+            $.ajax({
+                url: ctx,
+                type: "POST",
+                data: {
+                    'pk': JSON.stringify(pk_list),
+                    'action': JSON.stringify(action_selected),
+                    'csrfmiddlewaretoken': csrftoken,
+
+                },
+                success: function() {
+                    alert('DONE!');
+                    window.location.reload(true)
+                },
+                error: function() {
+                    alert('ERROR!');
+                },
+            });
+
+
+            function getCheckedCheckboxesFor(checkboxName) {
+                var checkboxes = angular.element(document.querySelectorAll('input[name="' + checkboxName + '"]:checked')),
+                    values = [];
+                Array.prototype.forEach.call(checkboxes, function(el) {
+                    values.push(el.value);
+                });
+                return values;
+            }
+        }
+
     });
 
 }());
+
+
+
+
+
+
+// Bootstrap function
+angular.bootstrap().invoke(function($http, $log) {
+    $http.get('/config.json').then(function(res) {
+        window.bbpConfig = res.data;
+        angular.element(document).ready(function() {
+            angular.bootstrap(document, ['miniki']);
+        });
+    }, function() {
+        $log.error('Cannot boot miniki application');
+    });
+});
