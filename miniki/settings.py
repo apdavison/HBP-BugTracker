@@ -23,8 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'bugtracker',
+        'USER': 'heli',
+        'PASSWORD': 'bugTRACKER#1',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -34,7 +38,7 @@ DATABASES = {
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = 'i!$a2gcap*w^a_@87k-520n@3b9qnozog7lghmenc+g+&(wyn5'
+SECRET_KEY = '4u4@h_7y7i3$kkvei_lv&3++=5k*^l0+8)#@!0@mryu5@++z7a'
 
 #joffrey stuffs
 #'i!$a2gcap*w^a_@87k-520n@3b9qnozog7lghmenc+g+&(wyn5' 
@@ -90,7 +94,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     #'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
     'django.middleware.security.SecurityMiddleware',
     'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
 

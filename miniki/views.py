@@ -242,12 +242,15 @@ class TicketDetailView(DetailView):
     form_class = CommentForm
 
     def get_object(self,request):
-        comments= Comment.objects.filter(ticket_id = self.kwargs['pk'])
-        for comment in comments:
+        coms= Comment.objects.filter(ticket_id = self.kwargs['pk'])
+        comments=list()
+        for com in coms:
+            comments.append( Comment.objects.get(pk=com.pk))
+        for comment in comments: 
             comment.is_author = self.check_user_is_author(request,comment)
+        print(comments)
         ticket = get_object_or_404(Ticket, pk=self.kwargs['pk'])
         ticket.is_author = self.check_user_is_author(request,ticket)
-        
         return [comments, ticket ]
         
     def get_queryset (self):        
@@ -331,9 +334,10 @@ class TicketDetailView(DetailView):
         return form
 
     def check_user_is_author(self,request,_object):
-            if str(request.user) == str(_object.author):
-                return True
-            else: return False 
+
+        if str(request.user) == str(_object.author):
+            return True
+        else: return False 
 
 
 @method_decorator(login_required(login_url='/login/hbp'), name='dispatch' )

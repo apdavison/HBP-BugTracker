@@ -31,7 +31,7 @@ from miniki.views import AdminTicketDetailView
 
 from django.contrib import admin
 
-from miniki.utils.ctx_handler import remove_ticket, close_ticket
+from miniki.utils.database_functions import remove_ticket, close_ticket
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
