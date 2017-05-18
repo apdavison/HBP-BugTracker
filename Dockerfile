@@ -28,7 +28,7 @@ ENV SITEDIR /home/docker/site
 
 COPY . $SITEDIR
 COPY packages /home/docker/packages
-COPY miniki/static /home/docker/static
+COPY issuetracker/static /home/docker/static
 
 # COPY simqueue /home/docker/simqueue
 # COPY quotas /home/docker/quotas
