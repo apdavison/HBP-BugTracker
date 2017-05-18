@@ -1,0 +1,8 @@
+image: cnrsunic/hbp_issuetracker
+dockerfile: ./Dockerfile
+ports:
+    443: 443
+env: [DEBUG,
+      ISSUETRACKER_DATABASE_HOST,
+      ISSUETRACKER_DATABASE_PORT]
+volumes: ["/etc/letsencrypt"]
