@@ -11,7 +11,26 @@
     </div>
     <br/> <br/> <br/>
 
-    <h1 align=center>Admin {{collab_name}} : Tickets</h1>
+    <div class="row" class="ng-cloak" id="ProjectEdit">
+        <style>
+            .ng-cloak {
+                display: none !important;
+            }
+        </style>
+        <span class="label label-warning floatright">Admin</span>
+        <form action="" class="project-name-form" onsubmit="return false" ng-controller="ProjectEdit">
+            {% csrf_token %}
+            <h1 contenteditable="true" id="project_name">{{ctx.project_name}}</h1>
+             <button type="submit" class="btn btn-primary" ng-click="saveProject('{{ctx.ctx}}')">Save</button>
+        </form>
+    </div>
+
+    <div class="row" id="ProjectShow" ng-controller="ProjectEdit">
+        <span class="label label-warning floatright">Admin</span>
+        <h1 id="project_name">{{ctx.project_name}}
+            <small><button class="btn btn-default" ng-click="editProjectName()" type="submit"><span class="glyphicon glyphicon-pencil"></span></button></small>
+        </h1>
+    </div>
 
     <table class="table table-striped table-condensed">
         <tbody>
