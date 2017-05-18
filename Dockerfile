@@ -38,12 +38,10 @@ WORKDIR /home/docker
 
 RUN pip install -r $SITEDIR/requirements.txt
 
-
 RUN pip install $SITEDIR/packages/task-types-0.0.10
-RUN pip install $SITEDIR/packages/bbp-services-0.0.14
-RUN pip install $SITEDIR/packages/hbp-app-python-auth-0.0.7
-RUN pip install $SITEDIR/packages/bbp-client-0.3.18
-
+RUN pip install $SITEDIR/packages/bbp-services-0.0.15
+RUN pip install $SITEDIR/packages/hbp-app-python-auth-0.1.5
+RUN pip install $SITEDIR/packages/bbp-client-0.4.4
 
 ENV PYTHONPATH  /home/docker:/home/docker/site:/usr/local/lib/python2.7/dist-packages:/usr/lib/python2.7/dist-packages
 
