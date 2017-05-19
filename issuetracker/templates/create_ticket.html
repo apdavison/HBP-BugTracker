@@ -6,12 +6,10 @@
 
 
 
-<div class="navbar navbar-form">
-        <form action= "{% url 'ticket-list2' ctx=ctx %}">
-            <input type="submit" value="Ticket-list" />
-        </form>
-        <br/>
-    </div>
+<div class="navbar navbar-form navbar-fixed-top">
+    <a href="{% url 'ticket-list2' ctx=ctx %}">All tickets</a>
+    <br/>
+</div>
 <br/> <br/> <br/>
 <h3 id="title-ticket" align=center>New Ticket </h3>
 
