@@ -184,7 +184,7 @@
 
                 },
                 success: function() {
-                    alert('DONE!');
+                    //alert('DONE!');
                     window.location.reload(true)
                 },
                 error: function() {

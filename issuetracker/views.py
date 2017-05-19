@@ -399,15 +399,15 @@ class AdminTicketListView2(ListView):
         if not _is_collaborator(request, self.kwargs['ctx']):
             return HttpResponseForbidden()
 
-        current_base_ctx = Ctx.objects.filter(ctx=self.kwargs['ctx']) 
+        current_base_ctx = Ctx.objects.get(ctx=self.kwargs['ctx'])
 
-        tickets = Ticket.objects.filter(ctx_id=current_base_ctx[0].id)
+        tickets = Ticket.objects.filter(ctx_id=current_base_ctx.id)
 
         ## add number of comments
         for ticket in tickets:
             ticket.nb_coms = self.get_nb_com(ticket.pk) 
         
-        return render(request, self.template_name, {'object': tickets, 'ctx': self.kwargs['ctx'], 'collab_name':get_collab_name(self.kwargs['ctx'])})
+        return render(request, self.template_name, {'object': tickets, 'ctx': current_base_ctx, 'collab_name': get_collab_name(self.kwargs['ctx'])})
 
     @classmethod  
     def get_nb_com(self, pk):
