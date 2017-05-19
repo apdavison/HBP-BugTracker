@@ -31,7 +31,7 @@
                             <span class="glyphicon glyphicon-user"></span> {{ object.1.author }}
                         </td>
 
-                        <td class=title id="title" width=1000 contenteditable="true" bgcolor=ghostwhite>
+                        <td class="title" id="title" width="1000" contenteditable="true" bgcolor="ghostwhite">
                             {{ object.1.title }}
                         </td>
 
@@ -46,11 +46,7 @@
                             <br/>
                         </td>
 
-                        <td class=text id="text" overflow=scroll contenteditable="true" bgcolor=ghostwhite>
-
-                            <br/> {{ object.1.text|markdown}}
-
-                        </td>
+                        <td class="text editable" id="text" overflow="scroll" contenteditable="true" bgcolor="ghostwhite">{{ object.1.text }}</td>
                         <td></td>
                         <td></td>
                     </tr>
