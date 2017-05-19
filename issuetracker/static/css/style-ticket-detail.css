@@ -54,3 +54,6 @@ font-weight: bold;
     font-weight: bold;
 }
 
+.editable {
+    white-space: pre-wrap;
+}
