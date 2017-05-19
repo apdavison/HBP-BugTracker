@@ -19,7 +19,7 @@ from django.conf.urls import include
 from issuetracker.views import config
 
 from issuetracker.views import CreateTicketView
-from issuetracker.views import create_project
+from issuetracker.views import create_project, edit_project
 from issuetracker.views import TicketListView
 from issuetracker.views import TicketListView2
 from issuetracker.views import Test_Menu_deroulant
@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^Menu_deroulant$', Test_Menu_deroulant, name='Menu_deroulant'), 
     url(r'^project_list/(?P<ctx>.+)$',ProjectListView.as_view(), name='project-list'),
     url(r'^create_project/(?P<ctx>.+)$', create_project, name='project-create'),
+    url(r'^edit_project/$', edit_project, name='project-edit'),
     url(r'^$',TicketListView.as_view(), name='ticket-list'),
     url(r'^list(?P<ctx>.+)$',TicketListView2.as_view(), name='ticket-list2'),
     url(r'^ticket/(?P<pk>\d+)/(?P<ctx>.+)$', TicketDetailView.as_view(), name='ticket-detail'),

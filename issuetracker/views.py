@@ -82,6 +82,17 @@ def create_project(request):
 
 
 @login_required(login_url='/login/hbp')
+def edit_project(request):
+    """Edit the project name"""
+    context = request.POST.get("ctx")
+    project_name = request.POST.get("project_name")
+    ctx = Ctx.objects.get(ctx=context)
+    ctx.project_name = project_name
+    ctx.save()
+    return HttpResponse("", status=200)
+
+
+@login_required(login_url='/login/hbp')
 def Test_Menu_deroulant(request):
     '''Render the wiki page using the provided context query parameter''' 
     try:
@@ -357,17 +368,17 @@ class AdminTicketListView(ListView):
             return self.redirect(request, pk=pk, ctx=ctx)
 
 
-        project_name = _get_collab_extension(request, ctx) 
+        project_name = _get_collab_extension(request, ctx)
         post_collab_ctx (request=request,ctx=ctx, project_name=project_name )
 
-        current_base_ctx = Ctx.objects.filter(ctx=ctx) 
-        tickets = Ticket.objects.filter(ctx_id=current_base_ctx[0].id)
+        current_base_ctx = Ctx.objects.get(ctx=ctx)
+        tickets = Ticket.objects.filter(ctx_id=current_base_ctx.id)
 
         ## add number of comments
         for ticket in tickets:
             ticket.nb_coms = self.get_nb_com(ticket.pk) 
 
-        return render(request, self.template_name, {'object': tickets, 'ctx': ctx, 'collab_name':get_collab_name(ctx)})
+        return render(request, self.template_name, {'object': tickets, 'ctx': current_base_ctx, 'collab_name': get_collab_name(ctx)})
 
     @classmethod  
     def get_nb_com(self, pk):
@@ -389,15 +400,15 @@ class AdminTicketListView2(ListView):
         if not _is_collaborator(request, self.kwargs['ctx']):
             return HttpResponseForbidden()
 
-        current_base_ctx = Ctx.objects.filter(ctx=self.kwargs['ctx']) 
+        current_base_ctx = Ctx.objects.get(ctx=self.kwargs['ctx'])
 
-        tickets = Ticket.objects.filter(ctx_id=current_base_ctx[0].id)
+        tickets = Ticket.objects.filter(ctx_id=current_base_ctx.id)
 
         ## add number of comments
         for ticket in tickets:
             ticket.nb_coms = self.get_nb_com(ticket.pk) 
         
-        return render(request, self.template_name, {'object': tickets, 'ctx': self.kwargs['ctx'], 'collab_name':get_collab_name(self.kwargs['ctx'])})
+        return render(request, self.template_name, {'object': tickets, 'ctx': current_base_ctx, 'collab_name': get_collab_name(self.kwargs['ctx'])})
 
     @classmethod  
     def get_nb_com(self, pk):

@@ -8,6 +8,8 @@ class Ctx (models.Model):
     ctx = models.CharField(max_length=1024) 
     project_name = models.CharField(max_length=1024, default ="no_name")
 
+    def __str__(self):
+        return "{} ({})".format(self.project_name, self.ctx)
 
     def as_json(self):
         return {

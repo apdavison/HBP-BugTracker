@@ -86,6 +86,35 @@
     });
 
 
+    //controller for editing project name in admin list view
+    app.controller('ProjectEdit', function($scope) {
+
+        $scope.saveProject = function(ctx) {
+            // get ticket form
+            var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+            var project_name = $("#project_name").text();
+            $.ajax({
+                url: "/edit_project/",
+                type: "POST",
+                data: { 'ctx': ctx, 'project_name': project_name, 'csrfmiddlewaretoken': csrftoken },
+
+                success: function(json) {
+                    //alert('Your ticket have been edited!');
+                    window.location.reload(true)
+                },
+                error: function(xhr, errmsg, err) {
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                },
+            });
+        };
+
+        $("#ProjectEdit").hide();
+        $scope.editProjectName = function() {
+            console.log("Clicked pencil");
+            $("#ProjectEdit").show();
+            $("#ProjectShow").hide();
+        };
+    });
 
     app.controller('Detail', function($scope) {
         // this is used to put the ctxstate in the URL of HBP
@@ -155,7 +184,7 @@
 
                 },
                 success: function() {
-                    alert('DONE!');
+                    //alert('DONE!');
                     window.location.reload(true)
                 },
                 error: function() {
