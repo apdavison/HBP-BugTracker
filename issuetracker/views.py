@@ -116,6 +116,7 @@ class CreateTicketView(TemplateView):
         if form.is_valid():
             form = form.save(commit=False)
             form.author = request.user
+            form.status = "open"
             form.save()
             return self.redirect(request, ctx = self.kwargs['ctx'])
         return render(request, self.template_name, {'form': form, 'ctx': self.kwargs['ctx'], 'collab_name':get_collab_name(self.kwargs['ctx'])})
